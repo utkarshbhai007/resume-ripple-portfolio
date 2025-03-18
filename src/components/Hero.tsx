@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Download, GitHub, Linkedin } from 'lucide-react';
+import { ArrowRight, Download, Github, Linkedin } from 'lucide-react';
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -132,7 +132,7 @@ const Hero = () => {
               className="p-3 rounded-full border border-foreground/10 bg-secondary hover:bg-secondary/60 transition-colors"
               aria-label="GitHub Profile"
             >
-              <GitHub size={20} />
+              <Github size={20} />
             </a>
           </motion.div>
         </motion.div>

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, GitHub, ArrowRight } from 'lucide-react';
+import { ExternalLink, Github, ArrowRight } from 'lucide-react';
 
 const Projects = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
@@ -83,7 +83,7 @@ const Projects = () => {
                         className="p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-primary/80 transition-colors duration-300"
                         aria-label="View GitHub repository"
                       >
-                        <GitHub size={16} />
+                        <Github size={16} />
                       </a>
                     )}
                     {project.live && (

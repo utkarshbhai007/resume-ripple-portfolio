@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Pin } from 'lucide-react';
+import { Calendar, Briefcase, Users, Globe } from 'lucide-react';
 
 const Experience = () => {
   const experiences = [
@@ -80,10 +80,10 @@ const Experience = () => {
                 }`}>
                   <div className="flex items-center gap-3 mb-3">
                     <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/20">
-                      {exp.icon === 'briefcase' && <briefcase size={18} className="text-primary" />}
-                      {exp.icon === 'code' && <code size={18} className="text-primary" />}
-                      {exp.icon === 'users' && <users size={18} className="text-primary" />}
-                      {exp.icon === 'globe' && <globe size={18} className="text-primary" />}
+                      {exp.icon === 'briefcase' && <Briefcase size={18} className="text-primary" />}
+                      {exp.icon === 'code' && <code className="text-primary">{'</>'}</code>}
+                      {exp.icon === 'users' && <Users size={18} className="text-primary" />}
+                      {exp.icon === 'globe' && <Globe size={18} className="text-primary" />}
                     </span>
                     <div>
                       <h3 className="font-bold text-xl">{exp.position}</h3>

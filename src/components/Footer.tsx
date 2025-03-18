@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { GitHub, Linkedin, Mail, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -41,7 +41,7 @@ const Footer = () => {
                   className="p-2 rounded-full border border-foreground/10 bg-secondary hover:bg-secondary/60 transition-colors"
                   aria-label="GitHub Profile"
                 >
-                  <GitHub size={18} />
+                  <Github size={18} />
                 </a>
                 <a 
                   href="https://linkedin.com/in/utkarsh-barad" 
