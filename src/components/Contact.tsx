@@ -56,7 +56,7 @@ const Contact = () => {
     {
       icon: <MapPin className="text-primary" size={24} />,
       title: 'Location',
-      value: 'Gamdhinagar, India',
+      value: 'Gandhinagar, India',
       link: null
     }
   ];
