@@ -15,6 +15,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi
 } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -50,6 +51,24 @@ const achievements = [
 
 const Achievements = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi | null>(null);
+  
+  React.useEffect(() => {
+    if (!api) return;
+    
+    const handleSelect = () => {
+      setActiveIndex(api.selectedScrollSnap());
+    };
+    
+    api.on("select", handleSelect);
+    
+    // Initial call to set the active index
+    handleSelect();
+    
+    return () => {
+      api.off("select", handleSelect);
+    };
+  }, [api]);
   
   return (
     <section id="achievements" className="py-20 relative overflow-hidden bg-gradient-to-b from-background to-background/95">
@@ -80,7 +99,7 @@ const Achievements = () => {
               align: "center",
             }}
             className="w-full"
-            onSelect={(index) => setActiveIndex(index.selectedScrollSnap())}
+            setApi={setApi}
           >
             <CarouselContent>
               {achievements.map((achievement, index) => (
@@ -139,7 +158,7 @@ const Achievements = () => {
                     className={`w-2.5 h-2.5 rounded-full transition-all ${
                       activeIndex === index ? "bg-primary w-5" : "bg-primary/30"
                     }`}
-                    onClick={() => setActiveIndex(index)}
+                    onClick={() => api?.scrollTo(index)}
                     aria-label={`Go to slide ${index + 1}`}
                   />
                 ))}
