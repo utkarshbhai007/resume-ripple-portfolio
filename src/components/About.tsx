@@ -69,7 +69,7 @@ const About = () => {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="font-medium">Phone:</span>
-                      <a href="tel:+919898585555" className="hover:text-primary transition-colors">+91 9898585555</a>
+                      <a href="tel:+919898588556" className="hover:text-primary transition-colors">+91 9898585555</a>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="font-medium">LinkedIn:</span>
