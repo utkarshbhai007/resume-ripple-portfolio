@@ -32,7 +32,7 @@ const About = () => {
             <div className="relative">
               <div className="aspect-square overflow-hidden rounded-2xl gradient-border blue-glow">
                 <img 
-                  src="/lovable-uploads/af86f004-3645-4186-8205-fbfb28709d27.png" 
+                  src="/lovable-uploads/57de046a-f571-4b59-b9a2-90a7a9353858.png" 
                   alt="Utkarsh Barad" 
                   className="w-full h-full object-cover"
                 />

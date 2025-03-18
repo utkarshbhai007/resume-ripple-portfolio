@@ -35,7 +35,7 @@ const Footer = () => {
               
               <div className="flex space-x-4">
                 <a 
-                  href="https://github.com/utkarshe" 
+                  href="https://github.com/utkarshbhai007" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-2 rounded-full border border-foreground/10 bg-secondary hover:bg-secondary/60 transition-colors"
@@ -82,6 +82,9 @@ const Footer = () => {
                 </li>
                 <li>
                   <a href="#contact" className="text-foreground/70 hover:text-primary transition-colors">Contact</a>
+                </li>
+                <li>
+                  <a href="#chatbot" className="text-foreground/70 hover:text-primary transition-colors">AI Assistant</a>
                 </li>
               </ul>
             </div>

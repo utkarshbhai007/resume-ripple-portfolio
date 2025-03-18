@@ -102,9 +102,9 @@ const Hero = () => {
               Get in touch <ArrowRight size={16} />
             </a>
             <a 
-              href="/Utkarsh_Barad_Resume.pdf" 
+              href="/lovable-uploads/57de046a-f571-4b59-b9a2-90a7a9353858.png" 
               className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-secondary text-secondary-foreground font-medium transition-all hover:bg-secondary/80"
-              download
+              download="Utkarsh_Barad_Resume.png"
             >
               Download Resume <Download size={16} />
             </a>
@@ -126,7 +126,7 @@ const Hero = () => {
               <Linkedin size={20} />
             </a>
             <a 
-              href="https://github.com/utkarshe" 
+              href="https://github.com/utkarshbhai007" 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-3 rounded-full border border-foreground/10 bg-secondary hover:bg-secondary/60 transition-colors"
