@@ -10,25 +10,25 @@ const Projects = () => {
     {
       title: 'Pulse AI',
       description: 'An AI and blockchain-powered healthcare platform that automates around 100+ health reports handling, enhances early symptom detection, and delivers personalized treatment plans while ensuring robust data security.',
-      image: '/placeholder.svg',
+      image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
       tech: ['Python', 'AI', 'Blockchain', 'Data Security'],
-      github: 'https://github.com/utkarshe/07/pulse-ai',
+      github: 'https://github.com/utkarshbhai007/Pulse-Ai',
       live: null
     },
     {
       title: 'DeepFake Detection Portal',
       description: 'Developed a deepfake detection model with over 80% accuracy, integrating API functionality and algorithms for detecting image and video-based deepfakes, ensuring comprehensive coverage of diverse scenarios.',
-      image: '/placeholder.svg',
+      image: 'https://images.unsplash.com/photo-1526378722484-bd91ca387e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80',
       tech: ['Machine Learning', 'Computer Vision', 'API Development', 'Python'],
-      github: 'https://github.com/utkarshe/07/deepfake-detection-portal',
+      github: 'https://github.com/utkarshbhai007/Deepfake-detection-portal',
       live: null
     },
     {
       title: 'Uber Clone',
       description: 'Developed a fully functional Uber clone application using the MERN stack, implementing Multi-Modal Transport system that allows ride-hailing services with public transportation systems, allowing users to plan combined trips and purchase tickets for multiple modes of transport in one app.',
-      image: '/placeholder.svg',
+      image: 'https://images.unsplash.com/photo-1611576410467-9fa589ed2a8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80',
       tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Maps API'],
-      github: 'https://github.com/utkarshe/07/uber-clone',
+      github: 'https://github.com/utkarshbhai007/Uber-clone',
       live: null
     }
   ];

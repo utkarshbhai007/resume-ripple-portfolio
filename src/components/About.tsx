@@ -32,7 +32,7 @@ const About = () => {
             <div className="relative">
               <div className="aspect-square overflow-hidden rounded-2xl gradient-border blue-glow">
                 <img 
-                  src="/lovable-uploads/57de046a-f571-4b59-b9a2-90a7a9353858.png" 
+                  src="/lovable-uploads/af86f004-3645-4186-8205-fbfb28709d27.png" 
                   alt="Utkarsh Barad" 
                   className="w-full h-full object-cover"
                 />
@@ -54,7 +54,7 @@ const About = () => {
           >
             <div className="space-y-6">
               <p className="text-lg leading-relaxed text-foreground/80">
-                As an aspiring Python Developer and Full Stack Developer, I possess proficiency in both front-end and back-end technologies. I am eager to leverage my Python capabilities in developing scalable applications and stay updated with emerging technologies to provide value to any organization.
+                As an aspiring Full Stack Developer, I possess proficiency in both front-end and back-end technologies. I am eager to leverage my development capabilities in building scalable applications and stay updated with emerging technologies to provide value to any organization.
               </p>
               <p className="text-lg leading-relaxed text-foreground/80">
                 I believe that success is achieved through excellence in software development, contributing positively to the teams and companies I engage with.

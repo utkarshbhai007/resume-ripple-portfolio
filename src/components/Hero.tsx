@@ -65,7 +65,7 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="px-4 py-1 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm text-sm"
             >
-              Python & Full Stack Developer
+              Full Stack Developer
             </motion.div>
           </div>
 
@@ -77,6 +77,7 @@ const Hero = () => {
           >
             <span className="block">Hi, I'm </span>
             <span className="text-gradient">Utkarsh Barad</span>
+            <span className="block text-2xl md:text-3xl mt-2 text-primary/80">7x Hackathon Winner</span>
           </motion.h1>
 
           <motion.p 
@@ -85,7 +86,7 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            Aspiring Python Developer and Full Stack Developer with expertise in building
+            Aspiring Full Stack Developer with expertise in building
             scalable applications and emerging technologies.
           </motion.p>
 
@@ -102,7 +103,7 @@ const Hero = () => {
               Get in touch <ArrowRight size={16} />
             </a>
             <a 
-              href="/lovable-uploads/57de046a-f571-4b59-b9a2-90a7a9353858.png" 
+              href="/lovable-uploads/6a98d248-6db3-4217-8228-af0e94bb5397.png" 
               className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-secondary text-secondary-foreground font-medium transition-all hover:bg-secondary/80"
               download="Utkarsh_Barad_Resume.png"
             >
