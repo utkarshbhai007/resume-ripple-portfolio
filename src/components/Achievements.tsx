@@ -25,7 +25,7 @@ const achievements = [
     title: "Startup Weekend",
     position: "1st Place",
     location: "PDEU Innovation Centre, Gandhinagar",
-    date: "2022",
+    date: "2024",
     image: "/lovable-uploads/ed83d005-d9fb-4810-9853-200e45bc1ca2.png",
     description: "Won first place at the Techstars Startup Weekend competition at Pandit Deendayal Energy University."
   },
@@ -34,7 +34,7 @@ const achievements = [
     title: "Atmiya Hackathon",
     position: "2nd Place",
     location: "Atmiya University",
-    date: "2023",
+    date: "2024",
     image: "/lovable-uploads/a3990e93-afde-408e-93ff-ff86cfd3ab34.png",
     description: "Secured second position at the Atmiya University Hackathon, winning a cash prize for innovative solution."
   },
@@ -43,7 +43,7 @@ const achievements = [
     title: "Codefiesta Hackathon 3.0",
     position: "2nd Runner Up",
     location: "Global Institute of Technology, Jaipur",
-    date: "2023",
+    date: "2024",
     image: "/lovable-uploads/2f3a309b-b5f8-4223-bcb7-4e942abecf53.png", 
     description: "Achieved 2nd runner-up position at the Codefiesta Hackathon 3.0, recognized for technical excellence."
   }
