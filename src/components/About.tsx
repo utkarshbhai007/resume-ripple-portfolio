@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Code, Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { Code, Github, Linkedin, Mail, Phone, Zap } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const About = () => {
@@ -42,14 +42,14 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="py-16 md:py-20 relative overflow-hidden">
+    <section id="about" className="py-16 md:py-20 relative overflow-hidden noise-bg cyber-grid">
       {/* Background Elements */}
-      <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-50 animate-spin-slow" />
-      <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-50 animate-spin-slow" />
+      <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl opacity-50 animate-spin-slow" />
+      <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-secondary/20 rounded-full blur-3xl opacity-50 animate-spin-slow" />
       
       {/* Code Matrix Effect - Animated dots in background */}
-      <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-        {Array.from({ length: 30 }).map((_, i) => (
+      <div className="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
+        {Array.from({ length: 40 }).map((_, i) => (
           <motion.div 
             key={i}
             className="absolute w-1 h-1 bg-primary rounded-full"
@@ -81,11 +81,11 @@ const About = () => {
           className="max-w-3xl mx-auto text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 flex items-center justify-center gap-3">
-            <Code className="text-primary animate-pulse" />
-            <span>About Me</span>
-            <Code className="text-primary animate-pulse" />
+            <Zap className="text-accent neon-text" />
+            <span className="text-gradient neon-text">About Me</span>
+            <Zap className="text-accent neon-text" />
           </h2>
-          <div className="h-1 w-20 bg-primary mx-auto mb-6 rounded-full animate-background-shine bg-[length:400%_100%] bg-gradient-to-r from-primary/50 via-primary to-primary/50" />
+          <div className="h-1 w-32 mx-auto mb-6 rounded-full animate-background-shine bg-[length:400%_100%] bg-gradient-to-r from-primary via-accent to-secondary" />
         </motion.div>
 
         <motion.div 
@@ -98,28 +98,29 @@ const About = () => {
           {/* Code Block Styling */}
           <motion.div 
             variants={codeBlockVariants}
-            className="mb-10 relative overflow-hidden glass-card p-6 rounded-xl border border-primary/20 blue-glow"
+            className="mb-10 relative overflow-hidden glass-card p-6 rounded-xl cyber-border"
+            whileHover={{ scale: 1.02 }}
           >
             <div className="flex items-center gap-2 mb-4 text-xs text-foreground/70">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              <span className="ml-2 text-foreground/60">about.tsx</span>
+              <div className="w-3 h-3 rounded-full bg-destructive"></div>
+              <div className="w-3 h-3 rounded-full bg-accent"></div>
+              <div className="w-3 h-3 rounded-full bg-primary"></div>
+              <span className="ml-2 text-primary/80 font-mono">about.tsx</span>
             </div>
             <pre className="font-mono text-sm md:text-base overflow-x-auto text-left">
               <code>
-                <span className="text-blue-400">class</span> <span className="text-green-400">UtkarshBarad</span> <span className="text-blue-400">extends</span> <span className="text-green-400">Developer</span> &#123;<br/>
-                <span className="ml-4 text-blue-400">constructor</span>() &#123;<br/>
+                <span className="text-secondary">class</span> <span className="text-primary">UtkarshBarad</span> <span className="text-secondary">extends</span> <span className="text-primary">Developer</span> &#123;<br/>
+                <span className="ml-4 text-secondary">constructor</span>() &#123;<br/>
                 <span className="ml-8">super();</span><br/>
-                <span className="ml-8"><span className="text-purple-400">this</span>.specialty = <span className="text-orange-400">"Full Stack Developer"</span>;</span><br/>
-                <span className="ml-8"><span className="text-purple-400">this</span>.experience = <span className="text-orange-400">"Building scalable applications"</span>;</span><br/>
-                <span className="ml-8"><span className="text-purple-400">this</span>.achievements = <span className="text-orange-400">"7x Hackathon Winner"</span>;</span><br/>
+                <span className="ml-8"><span className="text-accent">this</span>.specialty = <span className="text-primary">"Full Stack Developer"</span>;</span><br/>
+                <span className="ml-8"><span className="text-accent">this</span>.experience = <span className="text-primary">"Building scalable applications"</span>;</span><br/>
+                <span className="ml-8"><span className="text-accent">this</span>.achievements = <span className="text-primary">"7x Hackathon Winner"</span>;</span><br/>
                 <span className="ml-4">&#125;</span><br/><br/>
-                <span className="ml-4 text-blue-400">getSkills</span>() &#123;<br/>
-                <span className="ml-8 text-blue-400">return</span> [<span className="text-orange-400">"React"</span>, <span className="text-orange-400">"Node.js"</span>, <span className="text-orange-400">"MongoDB"</span>, <span className="text-orange-400">"Next.js"</span>];<br/>
+                <span className="ml-4 text-secondary">getSkills</span>() &#123;<br/>
+                <span className="ml-8 text-secondary">return</span> [<span className="text-primary">"React"</span>, <span className="text-primary">"Node.js"</span>, <span className="text-primary">"MongoDB"</span>, <span className="text-primary">"Next.js"</span>];<br/>
                 <span className="ml-4">&#125;</span><br/><br/>
-                <span className="ml-4 text-blue-400">getPhilosophy</span>() &#123;<br/>
-                <span className="ml-8 text-blue-400">return</span> <span className="text-orange-400">"Success through excellence in development."</span>;<br/>
+                <span className="ml-4 text-secondary">getPhilosophy</span>() &#123;<br/>
+                <span className="ml-8 text-secondary">return</span> <span className="text-primary">"Success through excellence in development."</span>;<br/>
                 <span className="ml-4">&#125;</span><br/>
                 &#125;
               </code>
@@ -132,9 +133,10 @@ const About = () => {
           >
             <motion.div
               variants={itemVariants}
-              className="glass-card p-6 rounded-xl border border-primary/20 transition-all hover:blue-glow"
+              className="glass-card p-6 rounded-xl cyber-border transition-all hover:yellow-glow"
+              whileHover={{ scale: 1.05, y: -5 }}
             >
-              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2 text-accent">
                 <Mail className="text-primary" size={20} />
                 Contact Information
               </h3>
@@ -178,16 +180,17 @@ const About = () => {
             
             <motion.div
               variants={itemVariants}
-              className="glass-card p-6 rounded-xl border border-primary/20 transition-all hover:blue-glow"
+              className="glass-card p-6 rounded-xl cyber-border transition-all hover:magenta-glow"
+              whileHover={{ scale: 1.05, y: -5 }}
             >
-              <h3 className="text-xl font-semibold mb-4">Education</h3>
+              <h3 className="text-xl font-semibold mb-4 text-accent">Education</h3>
               <ul className="space-y-4 text-foreground/70">
-                <li className="border-l-2 border-primary/30 pl-4 py-1">
+                <li className="border-l-2 border-secondary/50 pl-4 py-1">
                   <p className="font-medium text-foreground">BSC-CS/IT</p>
                   <p>Silver Oak University, Ahmedabad</p>
                   <p className="text-sm opacity-70">Aug 2023 - Present</p>
                 </li>
-                <li className="border-l-2 border-primary/30 pl-4 py-1">
+                <li className="border-l-2 border-secondary/50 pl-4 py-1">
                   <p className="font-medium text-foreground">HSC</p>
                   <p>Shree Swaminarayan Gurukul, Gandhinagar</p>
                   <p className="text-sm opacity-70">2021 - 2022</p>
