@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Code, Github, Linkedin, Mail, Phone, Zap } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import ModelViewer from './ModelViewer';
 
 const About = () => {
   const isMobile = useIsMobile();
@@ -95,6 +96,15 @@ const About = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="max-w-4xl mx-auto overflow-hidden"
         >
+          {/* 3D Model Viewer */}
+          <motion.div 
+            variants={codeBlockVariants}
+            className="mb-10 glass-card cyber-border rounded-xl overflow-hidden"
+            whileHover={{ scale: 1.02 }}
+          >
+            <ModelViewer />
+          </motion.div>
+          
           {/* Code Block Styling */}
           <motion.div 
             variants={codeBlockVariants}

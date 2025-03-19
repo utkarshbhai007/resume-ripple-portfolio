@@ -11,6 +11,7 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Cursor from '../components/Cursor';
 import Chatbot from '../components/Chatbot';
+import ParticlesBackground from '../components/ParticlesBackground';
 
 const Index = () => {
   useEffect(() => {
@@ -41,6 +42,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Cursor />
+      <ParticlesBackground />
       <Navbar />
       <main>
         <Hero />

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download, Github, Linkedin, Terminal } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import HeroBackground3D from './HeroBackground3D';
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -74,6 +75,9 @@ const Hero = () => {
       ref={heroRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 px-4"
     >
+      {/* 3D Background */}
+      <HeroBackground3D />
+      
       {/* Interactive background effect */}
       <div 
         className="absolute bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl opacity-20"
@@ -150,7 +154,7 @@ const Hero = () => {
           >
             <span className="block">Hi, I'm </span>
             <motion.span 
-              className="text-gradient"
+              className="text-gradient neon-text"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: "spring", stiffness: 100, delay: 0.6 }}
