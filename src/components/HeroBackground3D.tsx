@@ -1,8 +1,30 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, Suspense } from 'react';
 import * as THREE from 'three';
 import { useFrame, Canvas } from '@react-three/fiber';
 import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
+
+// Error boundary for catching Three.js errors
+class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasError: boolean}> {
+  constructor(props: {children: React.ReactNode}) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div className="w-full h-full bg-background/50 flex items-center justify-center">
+        <p className="text-accent">Loading 3D effects...</p>
+      </div>;
+    }
+
+    return this.props.children;
+  }
+}
 
 // Animated sphere component
 const AnimatedSphere = () => {
@@ -55,6 +77,14 @@ const ParticleField = () => {
     }
   });
 
+  // Create a simple texture for particles if spark1.png isn't loading
+  const particleTexture = new THREE.TextureLoader().load('/spark1.png', 
+    undefined, 
+    (error) => {
+      console.log("Fallback to default particle");
+    }
+  );
+
   return (
     <points ref={particles}>
       <bufferGeometry>
@@ -76,7 +106,7 @@ const ParticleField = () => {
         color="#ff0eb6"
         sizeAttenuation={true}
         transparent={true}
-        alphaMap={new THREE.TextureLoader().load('/spark1.png')}
+        alphaMap={particleTexture}
         depthWrite={false}
       />
     </points>
@@ -87,32 +117,36 @@ const ParticleField = () => {
 const HeroBackground3D: React.FC = () => {
   return (
     <div className="absolute inset-0 -z-10 w-full h-full">
-      <Canvas 
-        camera={{ position: [0, 0, 5], fov: 50 }}
-        gl={{ 
-          antialias: true,
-          alpha: true,
-          powerPreference: "high-performance",
-        }}
-        dpr={[1, 2]}
-      >
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[10, 10, 5]} intensity={1} color="#fff" />
-        <directionalLight position={[-10, -10, -5]} intensity={0.5} color="#ff0eb6" />
-        <pointLight position={[0, 0, 0]} intensity={1} color="#0efcb6" />
-        
-        <AnimatedSphere />
-        <ParticleField />
-        
-        <OrbitControls 
-          enableZoom={false}
-          enablePan={false}
-          autoRotate
-          autoRotateSpeed={0.6}
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
-        />
-      </Canvas>
+      <ErrorBoundary>
+        <Canvas 
+          camera={{ position: [0, 0, 5], fov: 50 }}
+          gl={{ 
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance",
+          }}
+          dpr={[1, 2]}
+        >
+          <Suspense fallback={null}>
+            <ambientLight intensity={0.4} />
+            <directionalLight position={[10, 10, 5]} intensity={1} color="#fff" />
+            <directionalLight position={[-10, -10, -5]} intensity={0.5} color="#ff0eb6" />
+            <pointLight position={[0, 0, 0]} intensity={1} color="#0efcb6" />
+            
+            <AnimatedSphere />
+            <ParticleField />
+            
+            <OrbitControls 
+              enableZoom={false}
+              enablePan={false}
+              autoRotate
+              autoRotateSpeed={0.6}
+              maxPolarAngle={Math.PI / 2}
+              minPolarAngle={Math.PI / 2}
+            />
+          </Suspense>
+        </Canvas>
+      </ErrorBoundary>
     </div>
   );
 };

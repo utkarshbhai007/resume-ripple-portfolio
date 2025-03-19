@@ -33,12 +33,14 @@ const LaptopModel = (props: any) => {
           <meshStandardMaterial color="#111" metalness={0.8} roughness={0.2} />
         </mesh>
         
-        {/* Screen content */}
+        {/* Screen content - Using meshStandardMaterial instead of meshBasicMaterial */}
         <mesh position={[0, 0.06, 0]}>
           <planeGeometry args={[2.8, 1.8]} />
-          <meshBasicMaterial color="#0efcb6" emissive="#0efcb6" emissiveIntensity={0.5}>
-            <videoTexture attach="map" args={[document.createElement('video')]} />
-          </meshBasicMaterial>
+          <meshStandardMaterial 
+            color="#0efcb6" 
+            emissive="#0efcb6" 
+            emissiveIntensity={0.5}
+          />
         </mesh>
       </group>
       
