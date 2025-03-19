@@ -66,7 +66,7 @@ export default {
 			},
 			fontFamily: {
 				sans: ['SF Pro Display', 'Inter', 'sans-serif'],
-				mono: ['SF Mono', 'monospace'],
+				mono: ['SF Mono', 'Fira Code', 'monospace'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -105,6 +105,40 @@ export default {
 				'spin-slow': {
 					'0%': { transform: 'rotate(0deg)' },
 					'100%': { transform: 'rotate(360deg)' }
+				},
+				'bounce-small': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-8px)' }
+				},
+				'glitch': {
+					'0%': {
+						transform: 'translate(0)',
+						filter: 'blur(0px)'
+					},
+					'5%': {
+						transform: 'translate(5px, -5px)',
+						filter: 'blur(0.5px)'
+					},
+					'10%': {
+						transform: 'translate(0)',
+						filter: 'blur(0px)'
+					},
+					'15%': {
+						transform: 'translate(-3px, 3px)',
+						filter: 'blur(0.5px)'
+					},
+					'20%': {
+						transform: 'translate(0)',
+						filter: 'blur(0px)'
+					},
+					'100%': {
+						transform: 'translate(0)',
+						filter: 'blur(0px)'
+					}
+				},
+				'typing': {
+					'from': { width: '0' },
+					'to': { width: '100%' }
 				}
 			},
 			animation: {
@@ -115,7 +149,10 @@ export default {
 				'scale-in': 'scale-in 0.6s ease-out',
 				'float': 'floating 3s ease-in-out infinite',
 				'background-shine': 'background-shine 8s linear infinite',
-				'spin-slow': 'spin-slow 20s linear infinite'
+				'spin-slow': 'spin-slow 20s linear infinite',
+				'bounce-small': 'bounce-small 2s ease-in-out infinite',
+				'glitch': 'glitch 5s ease-in-out infinite',
+				'typing': 'typing 3.5s steps(40, end)'
 			}
 		}
 	},
