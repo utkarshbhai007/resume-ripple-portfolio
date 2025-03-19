@@ -116,10 +116,10 @@ const About = () => {
                 <span className="ml-8"><span className="text-purple-400">this</span>.achievements = <span className="text-orange-400">"7x Hackathon Winner"</span>;</span><br/>
                 <span className="ml-4">&#125;</span><br/><br/>
                 <span className="ml-4 text-blue-400">getSkills</span>() &#123;<br/>
-                <span className="ml-8 text-blue-400">return</span> [<span className="text-orange-400">"React"</span>, <span className="text-orange-400">"Node.js"</span>, <span className="text-orange-400">"MongoDB"</span>, <span className="text-orange-400">"Next.js"</span>];</span><br/>
+                <span className="ml-8 text-blue-400">return</span> [<span className="text-orange-400">"React"</span>, <span className="text-orange-400">"Node.js"</span>, <span className="text-orange-400">"MongoDB"</span>, <span className="text-orange-400">"Next.js"</span>];<br/>
                 <span className="ml-4">&#125;</span><br/><br/>
                 <span className="ml-4 text-blue-400">getPhilosophy</span>() &#123;<br/>
-                <span className="ml-8 text-blue-400">return</span> <span className="text-orange-400">"Success through excellence in development."</span>;</span><br/>
+                <span className="ml-8 text-blue-400">return</span> <span className="text-orange-400">"Success through excellence in development."</span>;<br/>
                 <span className="ml-4">&#125;</span><br/>
                 &#125;
               </code>
