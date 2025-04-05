@@ -1,5 +1,5 @@
 
-import React, { useRef, useEffect, Suspense } from 'react';
+import React, { useRef, Suspense } from 'react';
 import * as THREE from 'three';
 import { useFrame, Canvas } from '@react-three/fiber';
 import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
@@ -13,6 +13,10 @@ class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasErr
 
   static getDerivedStateFromError() {
     return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    console.error('Three.js Error:', error);
   }
 
   render() {
@@ -77,14 +81,6 @@ const ParticleField = () => {
     }
   });
 
-  // Create a simple texture for particles if spark1.png isn't loading
-  const particleTexture = new THREE.TextureLoader().load('/spark1.png', 
-    undefined, 
-    (error) => {
-      console.log("Fallback to default particle");
-    }
-  );
-
   return (
     <points ref={particles}>
       <bufferGeometry>
@@ -106,7 +102,6 @@ const ParticleField = () => {
         color="#ff0eb6"
         sizeAttenuation={true}
         transparent={true}
-        alphaMap={particleTexture}
         depthWrite={false}
       />
     </points>

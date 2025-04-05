@@ -1,7 +1,7 @@
 
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, ContactShadows, Environment, useTexture } from '@react-three/drei';
+import { OrbitControls, ContactShadows, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface PortalRingProps {
@@ -67,9 +67,13 @@ const EnergyField = ({ radius, color }: { radius: number; color: string }) => {
   
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-    if (fieldRef.current) {
+    if (fieldRef.current && fieldRef.current.material) {
       fieldRef.current.rotation.y = t * 0.1;
-      fieldRef.current.material.opacity = 0.3 + Math.sin(t * 2) * 0.1;
+      // Check if material is an array or single material
+      const material = fieldRef.current.material as THREE.Material;
+      if ('opacity' in material) {
+        material.opacity = 0.3 + Math.sin(t * 2) * 0.1;
+      }
     }
   });
   
@@ -158,6 +162,32 @@ const Portal = () => {
   );
 };
 
+// Error boundary for catching Three.js errors
+class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasError: boolean}> {
+  constructor(props: {children: React.ReactNode}) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    console.error('Three.js Error:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div className="w-full h-full bg-background/50 flex items-center justify-center">
+        <p className="text-accent">Loading 3D effects...</p>
+      </div>;
+    }
+
+    return this.props.children;
+  }
+}
+
 // Portal 3D component for export
 const Portal3D: React.FC<{ className?: string; size?: string }> = ({ 
   className = "",
@@ -165,28 +195,30 @@ const Portal3D: React.FC<{ className?: string; size?: string }> = ({
 }) => {
   return (
     <div className={`${size} w-full ${className}`}>
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 45 }}
-        dpr={[1, 2]}
-      >
-        <ambientLight intensity={0.2} />
-        <Portal />
-        <Environment preset="night" />
-        <ContactShadows
-          opacity={0.2}
-          scale={5}
-          blur={3}
-          far={10}
-          resolution={256}
-          color="#000000"
-        />
-        <OrbitControls
-          enablePan={false}
-          enableZoom={false}
-          autoRotate
-          autoRotateSpeed={0.5}
-        />
-      </Canvas>
+      <ErrorBoundary>
+        <Canvas
+          camera={{ position: [0, 0, 5], fov: 45 }}
+          dpr={[1, 2]}
+        >
+          <ambientLight intensity={0.2} />
+          <Portal />
+          <Environment preset="night" />
+          <ContactShadows
+            opacity={0.2}
+            scale={5}
+            blur={3}
+            far={10}
+            resolution={256}
+            color="#000000"
+          />
+          <OrbitControls
+            enablePan={false}
+            enableZoom={false}
+            autoRotate
+            autoRotateSpeed={0.5}
+          />
+        </Canvas>
+      </ErrorBoundary>
     </div>
   );
 };
