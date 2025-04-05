@@ -12,8 +12,6 @@ import Footer from '../components/Footer';
 import Cursor from '../components/Cursor';
 import Chatbot from '../components/Chatbot';
 import ParticlesBackground from '../components/ParticlesBackground';
-import Portal3D from '../components/Portal3D';
-import { Suspense } from 'react';
 
 const Index = () => {
   useEffect(() => {
@@ -45,19 +43,6 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground relative">
       <Cursor />
       <ParticlesBackground />
-      
-      {/* Ambient 3D elements positioned throughout the page */}
-      <div className="fixed left-5 top-[20%] -z-10 opacity-50 transform scale-50 hidden md:block">
-        <Suspense fallback={<div className="h-[200px] w-[200px] bg-primary/5 rounded-full animate-pulse" />}>
-          <Portal3D size="h-[200px]" />
-        </Suspense>
-      </div>
-      
-      <div className="fixed right-5 top-[60%] -z-10 opacity-50 transform scale-50 hidden md:block">
-        <Suspense fallback={<div className="h-[200px] w-[200px] bg-primary/5 rounded-full animate-pulse" />}>
-          <Portal3D size="h-[200px]" />
-        </Suspense>
-      </div>
       
       <Navbar />
       <main>
