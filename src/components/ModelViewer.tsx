@@ -134,14 +134,20 @@ const TechHelix = (props: any) => {
           const start = new THREE.Vector3(...particle.position);
           const end = new THREE.Vector3(...(particle.connection as number[]));
           
-          // Create a line connecting two DNA strand points
+          // Create points for the line
           const points = [start, end];
           const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
           
           return (
-            <line key={`connection-${i}`} geometry={lineGeometry}>
-              <lineBasicMaterial color={particle.color} opacity={0.6} transparent />
-            </line>
+            <lineSegments key={`connection-${i}`}>
+              <bufferGeometry attach="geometry" {...lineGeometry} />
+              <lineBasicMaterial 
+                attach="material"
+                color={particle.color} 
+                opacity={0.6} 
+                transparent={true} 
+              />
+            </lineSegments>
           );
       })}
       
