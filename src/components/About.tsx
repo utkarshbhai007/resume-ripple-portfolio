@@ -96,7 +96,7 @@ const About = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="max-w-4xl mx-auto overflow-hidden"
         >
-          {/* 3D Model Viewer */}
+          {/* Tech DNA Helix Visualization - replacing the laptop model */}
           <motion.div 
             variants={codeBlockVariants}
             className="mb-10 glass-card cyber-border rounded-xl overflow-hidden"
