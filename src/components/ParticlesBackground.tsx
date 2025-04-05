@@ -53,54 +53,43 @@ const ParticlesContent = () => {
       
       camera.position.z = 30;
 
-      // Create particles
-      const particlesCount = window.innerWidth < 768 ? 500 : 1000;
-      const particlesGeometry = new THREE.BufferGeometry();
-      
-      const positionArray = new Float32Array(particlesCount * 3);
-      const colorArray = new Float32Array(particlesCount * 3);
-      
-      const colors = [
-        new THREE.Color('#0efcb6'),  // Primary - neon teal
-        new THREE.Color('#ff0eb6'),  // Secondary - neon pink
-        new THREE.Color('#fffc0e'),  // Accent - neon yellow
-      ];
-
-      for (let i = 0; i < particlesCount; i++) {
-        // Position
-        positionArray[i * 3] = (Math.random() - 0.5) * 100;       // x
-        positionArray[i * 3 + 1] = (Math.random() - 0.5) * 100;   // y
-        positionArray[i * 3 + 2] = (Math.random() - 0.5) * 100;   // z
+      // Create multiple particle systems for a more unique look
+      const createParticleSystem = (count: number, size: number, color: THREE.Color, speedFactor: number) => {
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(count * 3);
         
-        // Color
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        colorArray[i * 3] = randomColor.r;
-        colorArray[i * 3 + 1] = randomColor.g;
-        colorArray[i * 3 + 2] = randomColor.b;
-      }
+        for (let i = 0; i < count * 3; i += 3) {
+          // Create a spiral pattern
+          const angle = (i / 3) * 0.01 * Math.PI * 2;
+          const radius = Math.random() * 100;
+          
+          positions[i] = Math.cos(angle) * radius; // x
+          positions[i + 1] = Math.sin(angle) * radius; // y
+          positions[i + 2] = (Math.random() - 0.5) * 50; // z
+        }
+        
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        
+        const material = new THREE.PointsMaterial({
+          size: size,
+          color: color,
+          transparent: true,
+          opacity: 0.7,
+          sizeAttenuation: true,
+        });
+        
+        const particles = new THREE.Points(geometry, material);
+        particles.userData.speedFactor = speedFactor;
+        scene.add(particles);
+        
+        return particles;
+      };
       
-      particlesGeometry.setAttribute(
-        'position', 
-        new THREE.BufferAttribute(positionArray, 3)
-      );
+      // Create three different particle systems
+      const particlesSystem1 = createParticleSystem(200, 0.3, new THREE.Color('#0efcb6'), 1); // Primary (teal)
+      const particlesSystem2 = createParticleSystem(150, 0.2, new THREE.Color('#ff0eb6'), 0.7); // Secondary (pink)
+      const particlesSystem3 = createParticleSystem(100, 0.15, new THREE.Color('#fffc0e'), 0.5); // Accent (yellow)
       
-      particlesGeometry.setAttribute(
-        'color', 
-        new THREE.BufferAttribute(colorArray, 3)
-      );
-      
-      // Create material and points
-      const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.2,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.6,
-        sizeAttenuation: true,
-      });
-      
-      const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-      scene.add(particles);
-
       // Mouse effect variables
       let mouseX = 0;
       let mouseY = 0;
@@ -128,12 +117,25 @@ const ParticlesContent = () => {
         targetX = mouseX * 0.2;
         targetY = mouseY * 0.2;
         
-        particles.rotation.x += 0.0003;
-        particles.rotation.y += 0.0005;
+        // Different rotation patterns for each system
+        particlesSystem1.rotation.x += 0.0001 * particlesSystem1.userData.speedFactor;
+        particlesSystem1.rotation.y += 0.0003 * particlesSystem1.userData.speedFactor;
+        
+        particlesSystem2.rotation.y += 0.0002 * particlesSystem2.userData.speedFactor;
+        particlesSystem2.rotation.z += 0.0001 * particlesSystem2.userData.speedFactor;
+        
+        particlesSystem3.rotation.x += 0.0002 * particlesSystem3.userData.speedFactor;
+        particlesSystem3.rotation.z -= 0.0001 * particlesSystem3.userData.speedFactor;
         
         // Smooth follow for mouse movement
-        particles.rotation.x += 0.05 * (targetY - particles.rotation.x);
-        particles.rotation.y += 0.05 * (targetX - particles.rotation.y);
+        particlesSystem1.rotation.x += 0.03 * (targetY - particlesSystem1.rotation.x);
+        particlesSystem1.rotation.y += 0.03 * (targetX - particlesSystem1.rotation.y);
+        
+        particlesSystem2.rotation.x += 0.02 * (targetY - particlesSystem2.rotation.x);
+        particlesSystem2.rotation.y += 0.02 * (targetX - particlesSystem2.rotation.y);
+        
+        particlesSystem3.rotation.x += 0.01 * (targetY - particlesSystem3.rotation.x);
+        particlesSystem3.rotation.y += 0.01 * (targetX - particlesSystem3.rotation.y);
         
         renderer.render(scene, camera);
         animationRef.current = requestAnimationFrame(animate);
@@ -155,8 +157,11 @@ const ParticlesContent = () => {
         window.removeEventListener('resize', handleResize);
         
         // Dispose resources
-        particlesGeometry.dispose();
-        particlesMaterial.dispose();
+        [particlesSystem1, particlesSystem2, particlesSystem3].forEach(system => {
+          system.geometry.dispose();
+          (system.material as THREE.PointsMaterial).dispose();
+        });
+        
         renderer.dispose();
       };
     } catch (error) {
@@ -168,7 +173,7 @@ const ParticlesContent = () => {
   return (
     <div 
       ref={containerRef} 
-      className="fixed inset-0 -z-10 pointer-events-none opacity-40"
+      className="fixed inset-0 -z-10 pointer-events-none opacity-50"
       style={{ mixBlendMode: 'screen' }}
     />
   );

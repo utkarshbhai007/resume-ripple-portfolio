@@ -40,9 +40,53 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden digital-rain scanlines">
+      {/* Custom cursor */}
       <Cursor />
+      
+      {/* Background elements */}
       <ParticlesBackground />
+      
+      {/* Circuit patterns - additional background decoration */}
+      <div className="fixed inset-0 pointer-events-none -z-5 opacity-5">
+        {/* Horizontal circuit lines */}
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div 
+            key={`h-line-${index}`}
+            className="absolute h-px bg-primary/80" 
+            style={{ 
+              width: '100%',
+              top: `${15 + index * 20}%`,
+              left: 0,
+            }}
+          />
+        ))}
+        
+        {/* Vertical circuit lines */}
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div 
+            key={`v-line-${index}`}
+            className="absolute w-px bg-primary/80" 
+            style={{ 
+              height: '100%',
+              left: `${15 + index * 20}%`,
+              top: 0,
+            }}
+          />
+        ))}
+        
+        {/* Circuit nodes */}
+        {Array.from({ length: 10 }).map((_, index) => (
+          <div 
+            key={`node-${index}`}
+            className="absolute w-2 h-2 rounded-full bg-primary/80" 
+            style={{ 
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+            }}
+          />
+        ))}
+      </div>
       
       <Navbar />
       <main>
