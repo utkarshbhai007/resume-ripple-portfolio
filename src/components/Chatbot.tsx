@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, X, Minimize, Maximize, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -20,7 +19,7 @@ const ChatBot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  const geminiApiKey = 'AIzaSyCzxMxWDQIDTuklVyrVDbsRzHEa6Z9y_U8';
+  const apiKey = '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';
 
   useEffect(() => {
     scrollToBottom();
@@ -43,34 +42,33 @@ const ChatBot = () => {
     setIsTyping(true);
     
     try {
-      const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent', {
+      // Using Nvidia API endpoint
+      const response = await fetch('https://api.nvcf.nvidia.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-goog-api-key': geminiApiKey
+          'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          contents: [
+          model: 'playground_llama3',
+          messages: [
             {
-              role: "user",
-              parts: [
-                {
-                  text: `You are an AI assistant for Utkarsh Barad, a Python and Full Stack Developer. 
-                  Utkarsh is studying BSC-CS/IT at Silver Oak University. 
-                  He is proficient in Python, web development, and stays updated with emerging technologies.
-                  His GitHub is https://github.com/utkarshbhai007 and LinkedIn is https://linkedin.com/in/utkarsh-barad.
-                  Only answer questions related to Utkarsh, his skills, experience, or general programming topics.
-                  Keep responses concise and helpful. The user asks: ${userMessage}`
-                }
-              ]
-            }
+              role: 'system',
+              content: `You are an AI assistant for Utkarsh Barad, a Python and Full Stack Developer. 
+              Utkarsh is studying BSC-CS/IT at Silver Oak University. 
+              He is proficient in Python, web development, and stays updated with emerging technologies.
+              His GitHub is https://github.com/utkarshbhai007 and LinkedIn is https://linkedin.com/in/utkarsh-barad.
+              Only answer questions related to Utkarsh, his skills, experience, or general programming topics.
+              Keep responses concise and helpful.`
+            },
+            ...messages.map(msg => ({
+              role: msg.role,
+              content: msg.content
+            })),
+            { role: 'user', content: userMessage }
           ],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 500,
-            topP: 0.8,
-            topK: 40
-          }
+          temperature: 0.7,
+          max_tokens: 500
         })
       });
       
@@ -80,12 +78,9 @@ const ChatBot = () => {
       
       const data = await response.json();
       
-      // Extract the response text from Gemini API
-      const assistantResponse = data.candidates[0].content.parts[0].text;
-      
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: assistantResponse
+        content: data.choices[0].message.content 
       }]);
     } catch (error) {
       console.error('Error fetching response:', error);
