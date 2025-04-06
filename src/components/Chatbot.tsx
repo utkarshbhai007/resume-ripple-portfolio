@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import OpenAI from 'openai';
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,13 @@ const ChatBot = () => {
   const { toast } = useToast();
 
   const apiKey = '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';
+  
+  // Initialize OpenAI client
+  const openai = new OpenAI({
+    apiKey: apiKey,
+    baseURL: 'https://integrate.api.nvidia.com/v1',
+    dangerouslyAllowBrowser: true // Needed for browser usage
+  });
 
   useEffect(() => {
     scrollToBottom();
@@ -43,45 +51,40 @@ const ChatBot = () => {
     setIsTyping(true);
     
     try {
-      // Using Nvidia API endpoint with correct URL
-      const response = await fetch('https://api.nvcf.nvidia.com/v2/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model: 'mistralai/mixtral-8x7b-instruct-v0.1',
-          messages: [
-            {
-              role: 'system',
-              content: `You are an AI assistant for Utkarsh Barad, a Python and Full Stack Developer. 
+      // Using OpenAI client with NVIDIA API
+      const systemMessage = {
+        role: 'system',
+        content: `You are an AI assistant for Utkarsh Barad, a Python and Full Stack Developer. 
               Utkarsh is studying BSC-CS/IT at Silver Oak University. 
               He is proficient in Python, web development, and stays updated with emerging technologies.
               His GitHub is https://github.com/utkarshbhai007 and LinkedIn is https://linkedin.com/in/utkarsh-barad.
               Only answer questions related to Utkarsh, his skills, experience, or general programming topics.
               Keep responses concise and helpful.`
-            },
-            ...messages.map(msg => ({
-              role: msg.role,
-              content: msg.content
-            })),
-            { role: 'user', content: userMessage }
-          ],
-          temperature: 0.7,
-          max_tokens: 500
-        })
+      };
+      
+      const chatMessages = [
+        systemMessage,
+        ...messages.map(msg => ({
+          role: msg.role,
+          content: msg.content
+        })),
+        { role: 'user' as const, content: userMessage }
+      ];
+      
+      const completion = await openai.chat.completions.create({
+        model: "thudm/chatglm3-6b",
+        messages: chatMessages,
+        temperature: 0.7,
+        top_p: 1,
+        max_tokens: 500
       });
       
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-      
-      const data = await response.json();
+      const responseContent = completion.choices[0]?.message?.content || 
+        "I couldn't generate a response at the moment.";
       
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: data.choices[0].message.content 
+        content: responseContent 
       }]);
     } catch (error) {
       console.error('Error fetching response:', error);
