@@ -22,8 +22,42 @@ const Skills = () => {
     }
   ];
 
+  // DNA Base pair representations for skills
+  const DNABases = () => {
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute opacity-10"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              transform: 'translate(-50%, -50%)',
+            }}
+            animate={{
+              opacity: [0.05, 0.2, 0.05],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 5,
+              repeat: Infinity,
+              delay: Math.random() * 2
+            }}
+          >
+            <div className="font-mono text-5xl md:text-7xl">
+              {['A', 'T', 'G', 'C'][Math.floor(Math.random() * 4)]}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <section id="skills" className="py-20 relative overflow-hidden">
+      {/* DNA bases background */}
+      <DNABases />
+      
       {/* Background elements */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-70" />
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-70" />
@@ -37,7 +71,7 @@ const Skills = () => {
           className="max-w-3xl mx-auto text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">My Skills</h2>
-          <div className="h-1 w-20 bg-primary mx-auto mb-6 rounded-full" />
+          <div className="h-1 w-20 bg-gradient-to-r from-primary via-accent to-secondary mx-auto mb-6 rounded-full" />
           <p className="text-foreground/70">The technologies and tools I specialize in.</p>
         </motion.div>
 
@@ -49,8 +83,12 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: categoryIndex * 0.2 }}
+              className="relative"
             >
-              <h3 className="text-2xl font-semibold mb-8 text-center">{category.title}</h3>
+              <h3 className="text-2xl font-semibold mb-8 text-center relative inline-block">
+                {category.title}
+                <div className="absolute -bottom-2 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary"></div>
+              </h3>
               
               <div className="flex flex-wrap justify-center gap-3 md:gap-4">
                 {category.skills.map((skill, skillIndex) => (
@@ -66,9 +104,36 @@ const Skills = () => {
                       stiffness: 100
                     }}
                     whileHover={{ scale: 1.05, y: -5 }}
-                    className="glass-card p-4 rounded-lg hover:blue-glow transition-all duration-300"
+                    className="relative overflow-hidden"
                   >
-                    <p className="text-center font-medium">{skill}</p>
+                    <div className="glass-card p-4 rounded-lg hover:blue-glow transition-all duration-300 relative">
+                      <p className="text-center font-medium relative z-10">{skill}</p>
+                      
+                      {/* DNA strand animation in the skill card */}
+                      <div className="absolute inset-0 -z-0 opacity-20 overflow-hidden">
+                        <motion.div
+                          className="absolute inset-0"
+                          animate={{
+                            backgroundPosition: ['0% 0%', '100% 100%']
+                          }}
+                          transition={{
+                            duration: 10,
+                            repeat: Infinity,
+                            repeatType: 'reverse',
+                            ease: "linear"
+                          }}
+                          style={{
+                            backgroundImage: `repeating-linear-gradient(
+                              45deg,
+                              transparent,
+                              transparent 5px,
+                              ${skillIndex % 3 === 0 ? '#0efcb6' : skillIndex % 3 === 1 ? '#ff0eb6' : '#fffc0e'} 5px,
+                              ${skillIndex % 3 === 0 ? '#0efcb6' : skillIndex % 3 === 1 ? '#ff0eb6' : '#fffc0e'} 10px
+                            )`,
+                          }}
+                        />
+                      </div>
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -84,34 +149,99 @@ const Skills = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mt-20"
         >
-          <h3 className="text-2xl font-semibold mb-8 text-center">Accomplishments</h3>
+          <h3 className="text-2xl font-semibold mb-8 text-center relative inline-block">
+            Accomplishments
+            <div className="absolute -bottom-2 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary"></div>
+          </h3>
           
-          <div className="max-w-3xl mx-auto glass-card p-8 rounded-lg blue-glow">
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <div className="min-w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
+          <div className="max-w-3xl mx-auto glass-card p-8 rounded-lg relative overflow-hidden">
+            {/* DNA helix background for accomplishments */}
+            <div className="absolute inset-0 -z-0 opacity-5 overflow-hidden">
+              <motion.div
+                className="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              >
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute top-1/2 left-1/2 w-[200%] h-0.5"
+                    style={{ 
+                      transformOrigin: 'center',
+                      transform: `rotate(${i * 30}deg)`,
+                      background: i % 2 === 0 ? 
+                        'linear-gradient(90deg, transparent 0%, rgba(14, 255, 182, 0.5) 50%, transparent 100%)' : 
+                        'linear-gradient(90deg, transparent 0%, rgba(255, 14, 182, 0.5) 50%, transparent 100%)'
+                    }}
+                  />
+                ))}
+              </motion.div>
+            </div>
+
+            <ul className="space-y-6 relative z-10">
+              <motion.li 
+                className="flex items-start gap-3"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <div className="min-w-8 h-8 rounded-full bg-gradient-to-r from-primary/40 to-primary/10 backdrop-blur-sm flex items-center justify-center border border-primary/30">
                   <span className="text-primary font-semibold">1</span>
                 </div>
-                <p><span className="font-medium">1st place</span> in Start-up Weekend</p>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="min-w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-primary font-semibold">2</span>
+                <div className="pt-1">
+                  <p className="font-medium text-lg">1st place in Start-up Weekend</p>
+                  <p className="text-foreground/70 text-sm mt-1">Led team to victory with innovative product solution</p>
                 </div>
-                <p><span className="font-medium">2nd place</span> in Anveshana Hackathon</p>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="min-w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-primary font-semibold">3</span>
+              </motion.li>
+              
+              <motion.li 
+                className="flex items-start gap-3"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <div className="min-w-8 h-8 rounded-full bg-gradient-to-r from-secondary/40 to-secondary/10 backdrop-blur-sm flex items-center justify-center border border-secondary/30">
+                  <span className="text-secondary font-semibold">2</span>
                 </div>
-                <p><span className="font-medium">3rd place</span> in Codefiesta Hackathon 3.0 & Business Idea Competition</p>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="min-w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
+                <div className="pt-1">
+                  <p className="font-medium text-lg">2nd place in Anveshana Hackathon</p>
+                  <p className="text-foreground/70 text-sm mt-1">Developed cutting-edge solution under tight deadlines</p>
+                </div>
+              </motion.li>
+              
+              <motion.li 
+                className="flex items-start gap-3"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <div className="min-w-8 h-8 rounded-full bg-gradient-to-r from-accent/40 to-accent/10 backdrop-blur-sm flex items-center justify-center border border-accent/30">
+                  <span className="text-accent font-semibold">3</span>
+                </div>
+                <div className="pt-1">
+                  <p className="font-medium text-lg">3rd place in Codefiesta Hackathon 3.0 & Business Idea Competition</p>
+                  <p className="text-foreground/70 text-sm mt-1">Created a sustainable business model with technical implementation</p>
+                </div>
+              </motion.li>
+              
+              <motion.li 
+                className="flex items-start gap-3"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                <div className="min-w-8 h-8 rounded-full bg-gradient-to-r from-primary/40 via-secondary/20 to-accent/40 backdrop-blur-sm flex items-center justify-center border border-primary/30">
                   <span className="text-primary font-semibold">🏆</span>
                 </div>
-                <p><span className="font-medium">Top 5%</span> internationally at Nasa Space App Challenge</p>
-              </li>
+                <div className="pt-1">
+                  <p className="font-medium text-lg">Top 5% internationally at NASA Space App Challenge</p>
+                  <p className="text-foreground/70 text-sm mt-1">Recognized for innovative space technology applications</p>
+                </div>
+              </motion.li>
             </ul>
           </div>
         </motion.div>

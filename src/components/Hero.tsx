@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Download, Github, Linkedin, Terminal, Sparkles, Zap } from 'lucide-react';
+import { ArrowRight, Download, Github, Linkedin, Terminal, Sparkles, Zap, Code } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Hero = () => {
@@ -13,7 +13,7 @@ const Hero = () => {
   const isMobile = useIsMobile();
   
   // Text to type
-  const fullText = "Building scalable applications with emerging technologies.";
+  const fullText = "Building innovative digital experiences with emerging technologies.";
   
   useEffect(() => {
     // Handle typing animation
@@ -59,35 +59,53 @@ const Hero = () => {
     };
   }, []);
   
-  // Digital rain effect (Matrix-style)
-  const DigitalRain = () => {
+  // DNA code animation
+  const DNACodeRain = () => {
     return (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 20 }).map((_, i) => (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute inset-0 bg-grid opacity-5"></div>
+        {Array.from({ length: 15 }).map((_, i) => (
           <motion.div 
             key={i}
-            className="absolute font-mono text-xs text-primary opacity-20"
+            className="absolute font-mono text-xs"
             initial={{ 
-              x: Math.random() * 100 + '%', 
+              x: `${Math.random() * 100}%`, 
               y: -20 
             }}
             animate={{ 
               y: '100%',
-              opacity: [0.2, 0.8, 0.2]
             }}
             transition={{ 
               repeat: Infinity, 
               duration: Math.random() * 10 + 5,
-              delay: Math.random() * 2,
+              delay: Math.random() * 5,
               ease: "linear"
             }}
-            style={{ color: i % 3 === 0 ? '#0efcb6' : i % 3 === 1 ? '#ff0eb6' : '#fffc0e' }}
+            style={{ 
+              color: i % 4 === 0 ? '#0efcb6' : i % 4 === 1 ? '#ff0eb6' : i % 4 === 2 ? '#fffc0e' : 'rgba(255,255,255,0.5)',
+              opacity: Math.random() * 0.5 + 0.1
+            }}
           >
-            {Array.from({ length: 10 }).map(() => 
-              String.fromCharCode(Math.floor(Math.random() * 74) + 48)
-            ).join('')}
+            {['A', 'T', 'G', 'C'].sort(() => Math.random() - 0.5).join('')}
           </motion.div>
         ))}
+      </div>
+    );
+  };
+
+  // Binary base pairs animation
+  const BinaryPairs = () => {
+    return (
+      <div className="absolute top-1/3 left-1/4 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: [0.2, 0.4, 0.2], scale: [0.8, 1.2, 0.8] }}
+          transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+          className="text-primary/20 font-mono text-6xl md:text-8xl select-none"
+          style={{ letterSpacing: '0.5em' }}
+        >
+          01
+        </motion.div>
       </div>
     );
   };
@@ -96,46 +114,41 @@ const Hero = () => {
     <section 
       id="home" 
       ref={heroRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 px-4 cyber-grid"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 px-4"
     >
-      {/* Digital Rain Effect */}
-      <DigitalRain />
+      {/* DNA Code rain background */}
+      <DNACodeRain />
       
-      {/* Circuit board pattern background */}
-      <div className="absolute inset-0 opacity-[0.05]">
-        <div className="absolute left-0 top-0 w-full h-full" style={{ 
+      {/* Binary code background */}
+      <BinaryPairs />
+      
+      {/* Background grid pattern */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0" style={{ 
           backgroundImage: `
-            linear-gradient(to right, rgba(14, 252, 182, 0.2) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(14, 252, 182, 0.2) 1px, transparent 1px)
+            linear-gradient(to right, rgba(14, 252, 182, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(14, 252, 182, 0.05) 1px, transparent 1px)
           `,
           backgroundSize: '30px 30px'
         }}></div>
-        
-        {/* Circuit paths */}
-        {!isMobile && Array.from({ length: 8 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute bg-primary/20"
-            style={{
-              height: '2px',
-              width: `${Math.random() * 200 + 100}px`,
-              left: `${Math.random() * 80}%`,
-              top: `${Math.random() * 100}%`,
-              transform: `rotate(${Math.random() * 360}deg)`,
-            }}
-          />
-        ))}
       </div>
-
+      
       {/* Reactive gradient background */}
-      <div 
-        className="absolute bg-gradient-to-br from-primary/20 via-accent/5 to-secondary/20 rounded-full blur-3xl"
+      <motion.div 
+        className="absolute bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 rounded-full blur-3xl"
+        animate={{
+          x: mousePosition.x * 0.05 - 200,
+          y: mousePosition.y * 0.05 - 200,
+        }}
+        transition={{
+          type: "spring",
+          damping: 40,
+          stiffness: 50,
+          restDelta: 0.001
+        }}
         style={{
-          width: '70%',
-          height: '70%',
-          top: mousePosition.y * 0.05, 
-          left: mousePosition.x * 0.05,
-          transition: 'top 0.5s ease-out, left 0.5s ease-out',
+          width: '80%',
+          height: '80%',
         }}
       />
 
@@ -153,9 +166,22 @@ const Hero = () => {
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
               className="px-4 py-1 rounded-full cyber-border bg-primary/5 backdrop-blur-sm text-sm flex items-center gap-2"
             >
-              <Zap size={14} className="text-primary animate-pulse" />
-              <span className="text-gradient">Full Stack Developer</span>
-              <Zap size={14} className="text-primary animate-pulse" />
+              <Code size={14} className="text-primary" />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-background to-secondary relative">
+                <span className="relative z-10">Full Stack Developer & Designer</span>
+                {/* DNA strand animation */}
+                <motion.span 
+                  className="absolute inset-0 overflow-hidden"
+                  initial={{ width: "0%" }}
+                  animate={{ width: ["0%", "100%", "0%"] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatType: "loop", ease: "easeInOut", repeatDelay: 1 }}
+                >
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-secondary via-background to-primary">
+                    Full Stack Developer & Designer
+                  </span>
+                </motion.span>
+              </span>
+              <Code size={14} className="text-secondary" />
             </motion.div>
           </div>
 
@@ -167,34 +193,89 @@ const Hero = () => {
           >
             <span className="block">Hi, I'm </span>
             <motion.div 
-              className="text-gradient neon-text relative inline-block"
+              className="relative inline-block"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: "spring", stiffness: 100, delay: 0.6 }}
             >
-              <span className="relative z-10">Utkarsh Barad</span>
+              <span className="relative z-10 text-gradient">Utkarsh Barad</span>
               <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-secondary opacity-30 blur-lg -z-10 rounded-lg"></div>
+              
+              {/* DNA helix animation around name */}
+              <div className="absolute -inset-4 -z-10 opacity-30">
+                <motion.div 
+                  className="w-full h-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                >
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute top-1/2 left-1/2 w-full h-0.5"
+                      style={{ 
+                        transformOrigin: 'center',
+                        rotate: `${i * 30}deg`,
+                        background: i % 2 === 0 ? 
+                          'linear-gradient(90deg, transparent 0%, #0efcb6 50%, transparent 100%)' : 
+                          'linear-gradient(90deg, transparent 0%, #ff0eb6 50%, transparent 100%)'
+                      }}
+                    />
+                  ))}
+                </motion.div>
+              </div>
             </motion.div>
+            
             <motion.span 
-              className="block text-2xl md:text-3xl mt-2 text-primary/80"
+              className="block text-2xl md:text-3xl mt-2"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", stiffness: 100, delay: 0.8 }}
             >
               <Sparkles className="inline mr-2 text-accent" size={18} />
-              7x Hackathon Winner
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+                7x Hackathon Winner
+              </span>
               <Sparkles className="inline ml-2 text-accent" size={18} />
             </motion.span>
           </motion.h1>
 
           <motion.div 
-            className={`text-lg md:text-xl text-foreground/70 mb-8 max-w-2xl mx-auto min-h-[60px] font-mono ${glitchEffect ? 'animate-glitch' : ''}`}
+            className={`text-lg md:text-xl text-foreground/70 mb-8 max-w-2xl mx-auto min-h-[60px] font-mono relative ${glitchEffect ? 'animate-glitch' : ''}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <span>{typedText}</span>
+            <span className="relative">{typedText}</span>
             <span className={`inline-block w-2 h-5 bg-primary ml-1 ${typingComplete ? 'animate-pulse' : ''}`}></span>
+            
+            {/* DNA code floating up from the text */}
+            {typingComplete && (
+              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute bottom-0 font-mono text-xs text-primary/50"
+                    initial={{ 
+                      x: 100 + Math.random() * 200, 
+                      y: 0,
+                      opacity: 0.7
+                    }}
+                    animate={{ 
+                      y: [0, -60],
+                      opacity: [0.7, 0]
+                    }}
+                    transition={{ 
+                      repeat: Infinity, 
+                      duration: 2 + Math.random() * 3,
+                      delay: Math.random() * 5,
+                      ease: "easeOut"
+                    }}
+                  >
+                    {['A', 'T', 'G', 'C'][Math.floor(Math.random() * 4)]}
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </motion.div>
 
           <motion.div 
@@ -205,24 +286,57 @@ const Hero = () => {
           >
             <motion.a 
               href="#contact" 
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md cyber-border bg-primary/10 text-primary hover:bg-primary/20 backdrop-blur-sm font-medium transition-all relative group overflow-hidden"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-primary/20 to-primary/5 backdrop-blur-sm border-2 border-primary/30 text-primary hover:border-primary/50 font-medium transition-all relative group overflow-hidden"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
+              {/* DNA animation inside button */}
+              <div className="absolute inset-0 overflow-hidden opacity-20">
+                <motion.div
+                  className="w-full h-full flex items-center justify-center"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                >
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-full h-0.5 bg-primary/50"
+                      style={{ transform: `rotate(${i * 30}deg)` }}
+                    />
+                  ))}
+                </motion.div>
+              </div>
+              
               <span className="relative z-10">Get in touch</span>
               <ArrowRight size={16} className="relative z-10" />
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/30 via-primary/10 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </motion.a>
+            
             <motion.a 
               href="/lovable-uploads/6a98d248-6db3-4217-8228-af0e94bb5397.png" 
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md cyber-border bg-secondary/10 text-secondary hover:bg-secondary/20 backdrop-blur-sm font-medium transition-all relative group overflow-hidden"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-secondary/20 to-secondary/5 backdrop-blur-sm border-2 border-secondary/30 text-secondary hover:border-secondary/50 font-medium transition-all relative group overflow-hidden"
               download="Utkarsh_Barad_Resume.png"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
+              {/* DNA animation inside button */}
+              <div className="absolute inset-0 overflow-hidden opacity-20">
+                <motion.div
+                  className="w-full h-full flex items-center justify-center" 
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                >
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-full h-0.5 bg-secondary/50"
+                      style={{ transform: `rotate(${i * 30}deg)` }}
+                    />
+                  ))}
+                </motion.div>
+              </div>
+              
               <span className="relative z-10">Download Resume</span>
               <Download size={16} className="relative z-10" />
-              <div className="absolute inset-0 bg-gradient-to-r from-secondary/30 via-secondary/10 to-secondary/30 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </motion.a>
           </motion.div>
 
@@ -236,25 +350,33 @@ const Hero = () => {
               href="https://linkedin.com/in/utkarsh-barad" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-3 rounded-full cyber-border bg-background/50 hover:bg-secondary/20 backdrop-blur-sm transition-colors relative group"
+              className="p-3 rounded-full bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm border border-primary/20 hover:border-primary/40 transition-colors relative group"
               aria-label="LinkedIn Profile"
               whileHover={{ y: -5, scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Linkedin size={20} />
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 opacity-0 group-hover:opacity-100 transition-opacity blur-md -z-10"></div>
+              <Linkedin size={20} className="text-primary" />
+              <motion.div 
+                className="absolute inset-0 rounded-full bg-primary opacity-0 group-hover:opacity-10 blur-md -z-10"
+                animate={{ scale: [0.8, 1.2, 0.8] }}
+                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+              ></motion.div>
             </motion.a>
             <motion.a 
               href="https://github.com/utkarshbhai007" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-3 rounded-full cyber-border bg-background/50 hover:bg-secondary/20 backdrop-blur-sm transition-colors relative group"
+              className="p-3 rounded-full bg-gradient-to-br from-secondary/10 to-secondary/5 backdrop-blur-sm border border-secondary/20 hover:border-secondary/40 transition-colors relative group"
               aria-label="GitHub Profile"
               whileHover={{ y: -5, scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Github size={20} />
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 opacity-0 group-hover:opacity-100 transition-opacity blur-md -z-10"></div>
+              <Github size={20} className="text-secondary" />
+              <motion.div 
+                className="absolute inset-0 rounded-full bg-secondary opacity-0 group-hover:opacity-10 blur-md -z-10"
+                animate={{ scale: [0.8, 1.2, 0.8] }}
+                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut", delay: 0.2 }}
+              ></motion.div>
             </motion.a>
           </motion.div>
         </motion.div>
@@ -265,9 +387,17 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 1.2 }}
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:block"
         >
-          <div className="w-6 h-10 rounded-full border-2 border-foreground/20 flex justify-center cyber-border">
-            <div className="w-1 h-2 bg-primary rounded-full mt-2 animate-bounce-small" />
-          </div>
+          <motion.div 
+            className="w-6 h-10 rounded-full border-2 border-primary/30 flex justify-center"
+            animate={{ boxShadow: ["0 0 0px rgba(14, 255, 182, 0.3)", "0 0 15px rgba(14, 255, 182, 0.5)", "0 0 0px rgba(14, 255, 182, 0.3)"] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <motion.div 
+              className="w-1 h-2 bg-primary rounded-full mt-2"
+              animate={{ y: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          </motion.div>
         </motion.div>
       </div>
     </section>

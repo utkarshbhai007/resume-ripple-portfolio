@@ -1,5 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Cursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -8,7 +9,7 @@ const Cursor = () => {
   const [linkHovered, setLinkHovered] = useState(false);
 
   useEffect(() => {
-    // Show cursor when it first moves
+    // Show the cursor when it first moves
     const addEventListeners = () => {
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseenter', onMouseEnter);
@@ -46,59 +47,121 @@ const Cursor = () => {
       setClicked(false);
     };
 
-    // Track link hovers
+    // Check for elements that should change cursor
     const handleLinkHoverEvents = () => {
-      document.querySelectorAll('a, button, [role="button"]').forEach(el => {
-        el.addEventListener('mouseenter', () => setLinkHovered(true));
-        el.addEventListener('mouseleave', () => setLinkHovered(false));
+      const handleLinkMouseEnter = () => setLinkHovered(true);
+      const handleLinkMouseLeave = () => setLinkHovered(false);
+
+      document.querySelectorAll('a, button, [role="button"], input[type="submit"], input[type="button"]').forEach(el => {
+        el.addEventListener('mouseenter', handleLinkMouseEnter);
+        el.addEventListener('mouseleave', handleLinkMouseLeave);
       });
+
+      return () => {
+        document.querySelectorAll('a, button, [role="button"], input[type="submit"], input[type="button"]').forEach(el => {
+          el.removeEventListener('mouseenter', handleLinkMouseEnter);
+          el.removeEventListener('mouseleave', handleLinkMouseLeave);
+        });
+      };
     };
 
     addEventListeners();
-    handleLinkHoverEvents();
+    const cleanupLinkEvents = handleLinkHoverEvents();
 
     return () => {
       removeEventListeners();
+      cleanupLinkEvents();
     };
   }, []);
 
-  // Only show on desktop
-  if (typeof window !== 'undefined' && window.innerWidth < 768) {
-    return null;
-  }
+  // DNA-inspired cursor patterns
+  const DNAPattern = () => {
+    return (
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-50"
+        style={{ 
+          x: position.x - 8,
+          y: position.y - 8
+        }}
+      >
+        <motion.div
+          className="relative"
+          animate={{
+            rotate: [0, 360],
+          }}
+          transition={{
+            duration: 8,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+        >
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute"
+              style={{
+                width: '2px',
+                height: '8px',
+                backgroundColor: i % 2 === 0 ? '#0efcb6' : '#ff0eb6',
+                left: '8px',
+                top: '0px',
+                transform: `rotate(${i * 90}deg) translateY(-12px)`,
+                borderRadius: '1px'
+              }}
+            />
+          ))}
+        </motion.div>
+      </motion.div>
+    );
+  };
 
   return (
-    <div 
-      className="fixed left-0 top-0 w-full h-full pointer-events-none z-50"
-      style={{ opacity: hidden ? 0 : 1 }}
-    >
-      <div
-        className={`absolute rounded-full transition-transform duration-100 ease-out ${
-          clicked ? 'scale-90 opacity-70' : ''
-        } ${linkHovered ? 'scale-[3] mix-blend-difference bg-white' : 'bg-primary'}`}
-        style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          width: linkHovered ? '30px' : '15px',
-          height: linkHovered ? '30px' : '15px',
-          transform: 'translate(-50%, -50%)',
-          transition: 'width 0.2s, height 0.2s, background-color 0.2s',
+    <>
+      {/* Main cursor */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-50"
+        animate={{
+          x: position.x - 4,
+          y: position.y - 4,
+          scale: clicked ? 0.8 : linkHovered ? 1.5 : 1,
+          opacity: hidden ? 0 : 1,
         }}
-      />
-      <div
-        className="absolute rounded-full bg-primary/30 backdrop-blur-sm -z-10"
-        style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          width: '40px',
-          height: '40px',
-          transform: 'translate(-50%, -50%)',
-          transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
-          transitionDelay: '0.05s',
-          opacity: linkHovered ? 0 : 0.3,
+        transition={{
+          type: "spring",
+          mass: 0.2,
+          stiffness: 800,
+          damping: 25,
         }}
-      />
-    </div>
+      >
+        <div 
+          className={`w-2 h-2 rounded-full ${
+            linkHovered ? 'bg-accent mix-blend-difference' : 'bg-primary'
+          }`}
+        />
+      </motion.div>
+
+      {/* Outer cursor ring */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-50"
+        animate={{
+          x: position.x - 16,
+          y: position.y - 16,
+          scale: clicked ? 1.2 : linkHovered ? 0 : 1,
+          opacity: hidden ? 0 : clicked ? 0.4 : 0.15,
+        }}
+        transition={{
+          type: "spring",
+          mass: 0.5,
+          stiffness: 400,
+          damping: 28,
+        }}
+      >
+        <div className="w-8 h-8 rounded-full border-2 border-primary"></div>
+      </motion.div>
+
+      {/* DNA cursor pattern */}
+      {!hidden && !clicked && !linkHovered && <DNAPattern />}
+    </>
   );
 };
 
