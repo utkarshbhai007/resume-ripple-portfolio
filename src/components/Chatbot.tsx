@@ -20,7 +20,7 @@ const ChatBot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  const apiToken = '4b64a09c-71b3-4a10-89ec-18391856f2d4';
+  const geminiApiKey = 'AIzaSyCzxMxWDQIDTuklVyrVDbsRzHEa6Z9y_U8';
 
   useEffect(() => {
     scrollToBottom();
@@ -43,32 +43,34 @@ const ChatBot = () => {
     setIsTyping(true);
     
     try {
-      const response = await fetch('https://api.llama-api.com/chat/completions', {
+      const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiToken}`
+          'x-goog-api-key': geminiApiKey
         },
         body: JSON.stringify({
-          model: 'meta-llama/Llama-3-8b-chat',
-          messages: [
+          contents: [
             {
-              role: 'system',
-              content: `You are an AI assistant for Utkarsh Barad, a Python and Full Stack Developer. 
-              Utkarsh is studying BSC-CS/IT at Silver Oak University. 
-              He is proficient in Python, web development, and stays updated with emerging technologies.
-              His GitHub is https://github.com/utkarshbhai007 and LinkedIn is https://linkedin.com/in/utkarsh-barad.
-              Only answer questions related to Utkarsh, his skills, experience, or general programming topics.
-              Keep responses concise and helpful.`
-            },
-            ...messages.map(msg => ({
-              role: msg.role,
-              content: msg.content
-            })),
-            { role: 'user', content: userMessage }
+              role: "user",
+              parts: [
+                {
+                  text: `You are an AI assistant for Utkarsh Barad, a Python and Full Stack Developer. 
+                  Utkarsh is studying BSC-CS/IT at Silver Oak University. 
+                  He is proficient in Python, web development, and stays updated with emerging technologies.
+                  His GitHub is https://github.com/utkarshbhai007 and LinkedIn is https://linkedin.com/in/utkarsh-barad.
+                  Only answer questions related to Utkarsh, his skills, experience, or general programming topics.
+                  Keep responses concise and helpful. The user asks: ${userMessage}`
+                }
+              ]
+            }
           ],
-          temperature: 0.7,
-          max_tokens: 500
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 500,
+            topP: 0.8,
+            topK: 40
+          }
         })
       });
       
@@ -77,9 +79,13 @@ const ChatBot = () => {
       }
       
       const data = await response.json();
+      
+      // Extract the response text from Gemini API
+      const assistantResponse = data.candidates[0].content.parts[0].text;
+      
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: data.choices[0].message.content 
+        content: assistantResponse
       }]);
     } catch (error) {
       console.error('Error fetching response:', error);
