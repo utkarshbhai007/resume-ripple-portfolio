@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, X, Minimize, Maximize, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -42,15 +43,15 @@ const ChatBot = () => {
     setIsTyping(true);
     
     try {
-      // Using Nvidia API endpoint
-      const response = await fetch('https://api.nvcf.nvidia.com/v1/chat/completions', {
+      // Using Nvidia API endpoint with correct URL
+      const response = await fetch('https://api.nvcf.nvidia.com/v2/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: 'playground_llama3',
+          model: 'mistralai/mixtral-8x7b-instruct-v0.1',
           messages: [
             {
               role: 'system',
